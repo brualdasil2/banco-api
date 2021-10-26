@@ -129,6 +129,7 @@ class User(Resource):
                 return create_error_response(f"Usuario com login {login} nao existe!", 404)
             else:
                 user = data["users"][login]
+                user.pop("senha")
                 return create_response(user, 200)
     
     def put(self, login):
@@ -192,7 +193,10 @@ class Users(Resource):
             if not data["users"][auth]["admin"]:
                 return create_error_response("Somente o admin pode ver os usuários", 404)
             else:
-                return create_response(data["users"], 200)
+                users = data["users"]
+                for login in users:
+                    users[login].pop("senha")
+                return create_response(users, 200)
     
     def post(self):
         parser = reqparse.RequestParser()
