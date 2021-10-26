@@ -3,6 +3,7 @@ from flask_restful import Resource, Api, reqparse
 import json
 import jwt
 import datetime
+import hashlib
 
 app = Flask(__name__)
 api = Api(app)
@@ -16,6 +17,8 @@ def validate_token(token):
     except:
         return False
 
+def encrypt_string(text):
+    return hashlib.sha256(text.encode()).hexdigest()
 
 # Resposta padrão para não bugar o CORS na pré-requisição
 def options_response():
@@ -46,9 +49,11 @@ class Login(Resource):
         f = open("data.json", "r")
         users = json.load(f)["users"]
 
+        password = encrypt_string(args["senha"])
+
         if args["login"] not in users:
             return create_error_response(f"Usuario com login {args['login']} nao existe!", 404)
-        elif args["senha"] == users[args["login"]]["senha"]:
+        elif password == users[args["login"]]["senha"]:
             token = jwt.encode({"login": args["login"], "exp": datetime.datetime.utcnow() + datetime.timedelta(minutes=30)}, app.config["SECRET_KEY"])
             return create_response({"token":token}, 200)
         else:
@@ -146,8 +151,9 @@ class User(Resource):
                     return create_error_response(f"Usuario com login {login} nao existe!", 404)
                 else:
                     new_user = data["users"][login]
+                    password = encrypt_string(args["senha"])
                     if args["senha"]:
-                        new_user["senha"] = args["senha"]
+                        new_user["senha"] = password
                     if args["idade"]:
                         new_user["idade"] = args["idade"]
                     data["users"][login] = new_user
@@ -213,10 +219,11 @@ class Users(Resource):
                 return create_error_response(f"Usuario com login {args['login']} ja existe", 409)
             else:
                 f = open("data.json", "w")
+                password = encrypt_string(args["senha"])
                 new_user = {
                     "nome":args["nome"],
                     "idade":args["idade"],
-                    "senha":args["senha"],
+                    "senha":password,
                     "admin":args["admin"],
                     "saldo":args["saldo"],
                     "historico":[]
