@@ -49,10 +49,61 @@ class Login(Resource):
         if args["login"] not in users:
             return create_error_response(f"Usuario com login {args['login']} nao existe!", 404)
         elif args["senha"] == users[args["login"]]["senha"]:
-            token = jwt.encode({"login": args["login"], "exp": datetime.datetime.utcnow() + datetime.timedelta(minutes=2)}, app.config["SECRET_KEY"])
+            token = jwt.encode({"login": args["login"], "exp": datetime.datetime.utcnow() + datetime.timedelta(minutes=30)}, app.config["SECRET_KEY"])
             return create_response({"token":token}, 200)
         else:
             return create_error_response("Senha invalida!", 404)
+
+class Transfer(Resource):
+    def options(self):
+        return options_response()
+    
+    def post(self, login):
+        parser = reqparse.RequestParser()
+        parser.add_argument("valor", required=True, type=float)
+        parser.add_argument("destino", required=True, type=str)
+        args = parser.parse_args()
+
+        token = request.args.get("token")
+        auth = validate_token(token)
+        if not auth:
+            return create_error_response("Token inválido", 404)
+        else:
+            if login != auth:
+                return create_error_response("Somente o próprio usuário pode realizar transferencias", 404)
+            elif args["destino"] == login:
+                return create_error_response("Você não pode transferir para si mesmo", 404)
+            else:
+                f = open("data.json", "r")
+                data = json.load(f)
+                if args["destino"] not in data["users"]:
+                    return create_error_response(f"Usuario com login {args['destino']} não existe", 404)
+                else:
+                    if data["users"][login]["saldo"] < args["valor"]:
+                        return create_error_response("Saldo insuficiente", 404)
+                    else:
+                        f = open("data.json", "w")
+                        now = str(datetime.datetime.utcnow())
+                        data["users"][login]["saldo"] -= args["valor"]
+                        data["users"][login]["historico"].append({
+                            "valor": args["valor"],
+                            "destino": args["destino"],
+                            "data": now
+                        })
+                        data["users"][args["destino"]]["saldo"] += args["valor"]
+                        data["users"][args["destino"]]["historico"].append({
+                            "valor": args["valor"],
+                            "origem": login,
+                            "data": now
+                        })
+                        json.dump(data, f, indent=4)
+                        return create_response({
+                            "valor": args["valor"],
+                            "destino": args["destino"],
+                            "data": now
+                        }, 200)
+
+
 
 class User(Resource):
     def options(self):
@@ -77,7 +128,7 @@ class User(Resource):
     
     def put(self, login):
         parser = reqparse.RequestParser()
-        parser.add_argument("nome", required=False, type=str)
+        parser.add_argument("senha", required=False, type=str)
         parser.add_argument("idade", required=False, type=int)
         args = parser.parse_args()
 
@@ -95,8 +146,8 @@ class User(Resource):
                     return create_error_response(f"Usuario com login {login} nao existe!", 404)
                 else:
                     new_user = data["users"][login]
-                    if args["nome"]:
-                        new_user["nome"] = args["nome"]
+                    if args["senha"]:
+                        new_user["senha"] = args["senha"]
                     if args["idade"]:
                         new_user["idade"] = args["idade"]
                     data["users"][login] = new_user
@@ -143,6 +194,7 @@ class Users(Resource):
         parser.add_argument("idade", required=True, type=int)
         parser.add_argument("login", required=True, type=str)
         parser.add_argument("senha", required=True, type=str)
+        parser.add_argument("saldo", required=True, type=float)
         parser.add_argument("admin", required=True, type=bool)
         args = parser.parse_args()
 
@@ -161,25 +213,23 @@ class Users(Resource):
                 return create_error_response(f"Usuario com login {args['login']} ja existe", 409)
             else:
                 f = open("data.json", "w")
-                data["users"][args["login"]] = {
+                new_user = {
                     "nome":args["nome"],
                     "idade":args["idade"],
                     "senha":args["senha"],
-                    "admin":args["admin"]
+                    "admin":args["admin"],
+                    "saldo":args["saldo"],
+                    "historico":[]
                 }
+                data["users"][args["login"]] = new_user
                 json.dump(data, f, indent=4)
-                return create_response({
-                    "nome":args["nome"],
-                    "idade":args["idade"],
-                    "senha":args["senha"],
-                    "admin":args["admin"]
-                }, 201)
+                return create_response(new_user, 201)
 
 
         
 
-
-api.add_resource(Users, "/users")
+api.add_resource(Transfer, "/users/<login>/transfer")
+api.add_resource(Users, "/users") 
 api.add_resource(User, "/users/<login>")
 api.add_resource(Login, "/login")
 

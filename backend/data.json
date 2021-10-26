@@ -4,7 +4,29 @@
             "senha": "12345",
             "admin": true,
             "idade": 21,
-            "nome": "Bruno Balas"
+            "nome": "Bruno Silveira",
+            "saldo": 110.5,
+            "historico": [
+                {
+                    "valor": 10.5,
+                    "origem": "carollw",
+                    "data": "2021-10-26 03:40:09.045708"
+                }
+            ]
+        },
+        "carollw": {
+            "nome": "Caroline Weber",
+            "idade": 20,
+            "senha": "98765",
+            "admin": false,
+            "saldo": 9.5,
+            "historico": [
+                {
+                    "valor": 10.5,
+                    "destino": "brual",
+                    "data": "2021-10-26 03:40:09.045708"
+                }
+            ]
         }
     }
 }
