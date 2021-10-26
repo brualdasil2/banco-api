@@ -43,4 +43,11 @@ PUT (token): Atualiza alguns dados do usuário. Restrito ao próprio usuário e 
     }
 
 DELETE (token) (restrito ao admin): Deleta um usuário.
-    
+
+## /users/\<login>/transfer
+POST (token) (restrito ao admin): Realiza uma transferência para outro usuário pelo login. Só transfere se houver saldo suficietnte.
+
+    {
+        "valor": float,
+        "destino": string
+    }
