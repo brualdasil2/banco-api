@@ -39,22 +39,28 @@ def encrypt_string(text):
 # Resposta padrão para não bugar o CORS na pré-requisição
 def options_response():
     my_resp = make_response()
-    my_resp.headers['Access-Control-Allow-Origin'] = "*"
+    my_resp.headers["Access-Control-Allow-Origin"] = "*"
+    my_resp.headers["Access-Control-Allow-Headers"] = "Content-Type"
     return my_resp
 
 def create_response(res, code):
     my_resp = make_response(res)
-    my_resp.headers['Access-Control-Allow-Origin'] = "*"
+    my_resp.headers["Access-Control-Allow-Origin"] = "*"
+    my_resp.headers["Access-Control-Allow-Headers"] = "Content-Type"
     my_resp.status_code = code
     return my_resp
 
 def create_error_response(msg, code):
     my_resp = make_response({"message":msg})
-    my_resp.headers['Access-Control-Allow-Origin'] = "*"
+    my_resp.headers["Access-Control-Allow-Origin"] = "*"
+    my_resp.headers["Access-Control-Allow-Headers"] = "Content-Type"
     my_resp.status_code = code
     return my_resp
 
 class Login(Resource):
+    def options(self):
+        return options_response()
+
     def post(self):
         parser = reqparse.RequestParser()
         parser.add_argument("login", required=True, type=str)
