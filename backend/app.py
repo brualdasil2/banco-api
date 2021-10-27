@@ -17,6 +17,22 @@ def validate_token(token):
     except:
         return False
 
+def string_has(texto, string_func):
+    for c in texto:
+        if eval(f"c.{string_func}()"):
+            return True
+    return False
+
+def validate_password(senha):
+    if len(senha) < 8:
+        return create_error_response("A senha deve ter pelo menos 8 caracteres", 404)
+    elif not (string_has(senha, "islower") and string_has(senha, "isupper") and string_has(senha, "isnumeric")):
+        return create_error_response("A senha deve conter caracteres minusculos, maiusculos, e numeros", 404)
+    else:
+        return False
+    
+    
+
 def encrypt_string(text):
     return hashlib.sha256(text.encode()).hexdigest()
 
@@ -84,26 +100,27 @@ class Transfer(Resource):
                 if args["destino"] not in data["users"]:
                     return create_error_response(f"Usuario com login {args['destino']} não existe", 404)
                 else:
-                    if data["users"][login]["saldo"] < args["valor"]:
+                    valor = round(args["valor"], 2)
+                    if data["users"][login]["saldo"] < valor:
                         return create_error_response("Saldo insuficiente", 404)
                     else:
                         f = open("data.json", "w")
                         now = str(datetime.datetime.utcnow())
-                        data["users"][login]["saldo"] -= args["valor"]
+                        data["users"][login]["saldo"] -= valor
                         data["users"][login]["historico"].append({
-                            "valor": args["valor"],
+                            "valor": valor,
                             "destino": args["destino"],
                             "data": now
                         })
-                        data["users"][args["destino"]]["saldo"] += args["valor"]
+                        data["users"][args["destino"]]["saldo"] += valor
                         data["users"][args["destino"]]["historico"].append({
-                            "valor": args["valor"],
+                            "valor": valor,
                             "origem": login,
                             "data": now
                         })
                         json.dump(data, f, indent=4)
                         return create_response({
-                            "valor": args["valor"],
+                            "valor": valor,
                             "destino": args["destino"],
                             "data": now
                         }, 200)
@@ -222,19 +239,24 @@ class Users(Resource):
             elif args["login"] in data["users"]:
                 return create_error_response(f"Usuario com login {args['login']} ja existe", 409)
             else:
-                f = open("data.json", "w")
-                password = encrypt_string(args["senha"])
-                new_user = {
-                    "nome":args["nome"],
-                    "idade":args["idade"],
-                    "senha":password,
-                    "admin":args["admin"],
-                    "saldo":args["saldo"],
-                    "historico":[]
-                }
-                data["users"][args["login"]] = new_user
-                json.dump(data, f, indent=4)
-                return create_response(new_user, 201)
+                password_error = validate_password(args["senha"])
+                if password_error:
+                    return password_error
+                else:
+                    f = open("data.json", "w")
+                    password = encrypt_string(args["senha"])
+                    saldo = round(args["saldo",2])
+                    new_user = {
+                        "nome":args["nome"],
+                        "idade":args["idade"],
+                        "senha":password,
+                        "admin":args["admin"],
+                        "saldo":saldo,
+                        "historico":[]
+                    }
+                    data["users"][args["login"]] = new_user
+                    json.dump(data, f, indent=4)
+                    return create_response(new_user, 201)
 
 
         
