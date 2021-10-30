@@ -23,7 +23,13 @@ function Login() {
             history.push("/")
         }
         catch (e){
-            setLoginMsg(e.response.data.message)
+            if (e.response) {
+                setLoginMsg(e.response.data.message)
+            }
+            else {
+                setLoginMsg("Servidor não encontrado!")
+            }
+
         }
     }
 

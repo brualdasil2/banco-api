@@ -1,5 +1,6 @@
 import { useContext, useEffect, useState } from "react"
 import { Redirect } from "react-router"
+import MenuButton from "../../components/MenuButton"
 import { AuthContext } from "../../contexts/AuthContext"
 import { api } from "../../services/api"
 
@@ -12,25 +13,22 @@ function Home() {
             const res = await api.get(`/users/${user.login}?token=${user.token}`)
             setNome(res.data.nome)
         }
-        catch (e) {
-            console.log(e.response.data.message)
+        catch (e){
+            if (e.response) {
+                console.log(e.response.data.message)
+            }
+            else {
+                console.log("Servidor não encontrado!")
+            }
         }
     })
 
     return (
         <div>
-            {user.token
-                ?
-                (
-                    <div>
-                        <h1>HOME</h1>
-                        <h3>Bem-vindo, {nome}!</h3>
-                    </div>
-                )
-                :
-                (
-                    <Redirect to="/login" />
-                )}
+            <h1>HOME</h1>
+            <h3>Bem-vindo, {nome}!</h3>
+            <MenuButton destination="/perfil">Perfil</MenuButton>
+            <MenuButton destination="/transacoes">Transferências</MenuButton>
         </div>
     )
 }
