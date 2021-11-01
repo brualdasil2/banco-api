@@ -7,7 +7,7 @@ import Perfil from "./pages/Perfil";
 import ErrorPage from "./pages/404"
 import Transacoes from "./pages/Transacoes";
 import { PrivateRoute } from "./routes/PrivateRoute";
-
+import "./index.css"
 
 function App() {
 

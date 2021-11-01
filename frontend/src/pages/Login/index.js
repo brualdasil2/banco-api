@@ -37,7 +37,7 @@ function Login() {
         <ScreenContainer>
             <LoginForm onSubmit={(e) => sendLogin(e)}>
                 <input onChange={(e) => setLogin(e.target.value)} placeholder="Login"></input>
-                <input onChange={(e) => setSenha(e.target.value)} placeholder="Senha"></input>
+                <input type="password" onChange={(e) => setSenha(e.target.value)} placeholder="Senha"></input>
                 <button type="submit">Enviar</button>
             </LoginForm>
             <ErrorMsg>{loginMsg}</ErrorMsg>
