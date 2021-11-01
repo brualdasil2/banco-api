@@ -41,12 +41,14 @@ def options_response():
     my_resp = make_response()
     my_resp.headers["Access-Control-Allow-Origin"] = "*"
     my_resp.headers["Access-Control-Allow-Headers"] = "Content-Type"
+    my_resp.headers["Access-Control-Allow-Methods"] = "*"
     return my_resp
 
 def create_response(res, code):
     my_resp = make_response(res)
     my_resp.headers["Access-Control-Allow-Origin"] = "*"
     my_resp.headers["Access-Control-Allow-Headers"] = "Content-Type"
+    my_resp.headers["Access-Control-Allow-Methods"] = "*"
     my_resp.status_code = code
     return my_resp
 
@@ -54,6 +56,7 @@ def create_error_response(msg, code):
     my_resp = make_response({"message":msg})
     my_resp.headers["Access-Control-Allow-Origin"] = "*"
     my_resp.headers["Access-Control-Allow-Headers"] = "Content-Type"
+    my_resp.headers["Access-Control-Allow-Methods"] = "*"
     my_resp.status_code = code
     return my_resp
 
@@ -134,7 +137,7 @@ class Transfer(Resource):
 
 
 class User(Resource):
-    def options(self):
+    def options(self, login):
         return options_response()
 
     # Parâmetros são os valores passados no endpoint <id>
@@ -175,9 +178,13 @@ class User(Resource):
                     return create_error_response(f"Usuario com login {login} nao existe!", 404)
                 else:
                     new_user = data["users"][login]
-                    password = encrypt_string(args["senha"])
                     if args["senha"]:
-                        new_user["senha"] = password
+                        password_error = validate_password(args["senha"])
+                        if password_error:
+                            return password_error
+                        else:
+                            password = encrypt_string(args["senha"])
+                            new_user["senha"] = password
                     if args["idade"]:
                         new_user["idade"] = args["idade"]
                     data["users"][login] = new_user
