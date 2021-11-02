@@ -19,3 +19,4 @@ export const Value = styled.h3`
     font-size: 30px;
     margin-right: 20px;
 `
+

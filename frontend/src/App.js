@@ -8,6 +8,7 @@ import ErrorPage from "./pages/404"
 import Transacoes from "./pages/Transacoes";
 import { PrivateRoute } from "./routes/PrivateRoute";
 import "./index.css"
+import NewTransfer from "./pages/Transacoes/New";
 
 function App() {
 
@@ -26,6 +27,9 @@ function App() {
           </PrivateRoute>
           <PrivateRoute exact path="/transacoes">
             <Transacoes />
+          </PrivateRoute>
+          <PrivateRoute exact path="/transacoes/new">
+            <NewTransfer />
           </PrivateRoute>
           <Route path="*">
             <ErrorPage />
