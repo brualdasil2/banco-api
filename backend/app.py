@@ -224,9 +224,17 @@ class Users(Resource):
                 return create_error_response("Somente o admin pode ver os usuários", 404)
             else:
                 users = data["users"]
+                list_users = {"users":[]}
                 for login in users:
-                    users[login].pop("senha")
-                return create_response(users, 200)
+                    list_users["users"].append({
+                        "login":login,
+                        "admin":users[login]["admin"],
+                        "idade":users[login]["idade"],
+                        "nome":users[login]["nome"],
+                        "saldo":users[login]["saldo"],
+                        "historico":users[login]["historico"]
+                    })
+                return create_response(list_users, 200)
     
     def post(self):
         parser = reqparse.RequestParser()
