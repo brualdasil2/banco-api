@@ -4,6 +4,7 @@ import { AuthContext } from "../../../contexts/AuthContext"
 import Input from "../../../components/Input"
 import { api } from "../../../services/api"
 import { useHistory } from "react-router"
+import Button from "../../../components/Button"
 
 
 
@@ -87,7 +88,7 @@ export default function NewTransfer() {
         <ScreenContainer>
             <Input label="Usuário destino" onChange={(e) => {setDestino(e.target.value)}}/>
             <Input value={valor} label="Valor a transferir" onChange={(e) => {handleValueUpdate(e.target.value)}}/>
-            <button onClick={saveTransfer}>Enviar Transferência</button>
+            <Button disabled={valorNums.length === 0 || destino.length === 0} color="lightgreen" onClick={saveTransfer}>Enviar Transferência</Button>
             <ErrorMsg>{errorMsg}</ErrorMsg>
         </ScreenContainer>
     )

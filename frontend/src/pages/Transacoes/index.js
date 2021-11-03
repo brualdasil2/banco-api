@@ -4,6 +4,7 @@ import Transferencia from "../../components/Transferencia"
 import { AuthContext } from "../../contexts/AuthContext"
 import { api } from "../../services/api"
 import { SaldoContainer, TransfContainer, TransfScreenContainer } from "./styles"
+import Button from "../../components/Button"
 
 
 export default function Transacoes() {
@@ -42,7 +43,7 @@ export default function Transacoes() {
             <TransfContainer>
                 <SaldoContainer>
                     <h1>Saldo: R${user.saldo}</h1>
-                    <button onClick={() => history.push("/transacoes/new")}>Nova transferência</button>
+                    <Button color="lightgreen" onClick={() => history.push("/transacoes/new")}>Nova transferência</Button>
                 </SaldoContainer>
                 <h2>Histórico</h2>
                 {user.historico.slice().reverse().map((transf, index) => {

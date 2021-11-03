@@ -4,6 +4,7 @@ import { AuthContext } from "../../contexts/AuthContext";
 import { api } from "../../services/api";
 import { ErrorMsg, ScreenContainer } from "../Login/styles";
 import { InputsContainer, VerticalInputsContainer } from "./styles";
+import Button from "../../components/Button";
 
 export default function Perfil() {
     const [user, setUser] = useContext(AuthContext)
@@ -58,13 +59,13 @@ export default function Perfil() {
                     {editIdade ? (
                         <div>
                             <Input label="Idade" disabled={false} onChange={(e) => {setIdade(e.target.value)}} />
-                            <button disabled={idade.length === 0} onClick={saveIdade}>Salvar</button>
-                            <button onClick={() => setEditIdade(false)}>Cancelar</button>
+                            <Button color="lightgreen" disabled={idade.length === 0} onClick={saveIdade}>Salvar</Button>
+                            <Button color="red" onClick={() => setEditIdade(false)}>Cancelar</Button>
                         </div>
                     ):(
                         <div>
                             <h3>Idade: {user.idade}</h3>
-                            <button onClick={() => setEditIdade(true)}>Mudar idade</button>
+                            <Button onClick={() => setEditIdade(true)}>Mudar idade</Button>
                         </div>
                     )}
                 </div>    
@@ -76,11 +77,11 @@ export default function Perfil() {
                                 <Input type="password" label="Nova senha" disabled={false} onChange={(e) => {setSenha(e.target.value)}} />
                                 <Input type="password" label="Confirme a senha" disabled={false} onChange={(e) => {setRepSenha(e.target.value)}} />
                             </VerticalInputsContainer>
-                            <button disabled={senha !== repSenha || senha.length === 0} onClick={saveSenha}>Salvar senha</button>
-                            <button onClick={() => setEditSenha(false)}>Cancelar</button>
+                            <Button color="lightgreen" disabled={senha !== repSenha || senha.length === 0} onClick={saveSenha}>Salvar senha</Button>
+                            <Button color="red" onClick={() => setEditSenha(false)}>Cancelar</Button>
                         </div>
                     ):(
-                        <button onClick={() => setEditSenha(true)}>Mudar senha</button>
+                        <Button onClick={() => setEditSenha(true)}>Mudar senha</Button>
                     )}
                 </div>    
             </InputsContainer>
