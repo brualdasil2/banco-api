@@ -85,7 +85,7 @@ class Login(Resource):
             return create_error_response("Senha invalida!", 404)
 
 class Transfer(Resource):
-    def options(self):
+    def options(self, login):
         return options_response()
     
     def post(self, login):
@@ -115,13 +115,13 @@ class Transfer(Resource):
                     else:
                         f = open("data.json", "w")
                         now = str(datetime.datetime.utcnow())
-                        data["users"][login]["saldo"] -= valor
+                        data["users"][login]["saldo"] = round(data["users"][login]["saldo"] - valor, 2)
                         data["users"][login]["historico"].append({
                             "valor": valor,
                             "destino": args["destino"],
                             "data": now
                         })
-                        data["users"][args["destino"]]["saldo"] += valor
+                        data["users"][args["destino"]]["saldo"] = round(data["users"][args["destino"]]["saldo"] + valor, 2)
                         data["users"][args["destino"]]["historico"].append({
                             "valor": valor,
                             "origem": login,
