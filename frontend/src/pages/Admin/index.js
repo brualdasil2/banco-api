@@ -6,6 +6,7 @@ import { SaldoContainer, TransfContainer, TransfScreenContainer } from "../Trans
 import User from "../../components/User"
 import Button from "../../components/Button"
 import { useHistory } from "react-router";
+import NavArrow from "../../components/NavArrow";
 
 export default function Admin() {
 
@@ -47,19 +48,22 @@ export default function Admin() {
     }
     
     return (
-       <TransfScreenContainer>
-           <h1>Administrador</h1>
-            <TransfContainer>
-            <SaldoContainer>
-                <h2>Usuários</h2>
-                <Button color="lightgreen" onClick={() => history.push("/admin/newUser")}>Novo usuário</Button>
-            </SaldoContainer>
-                {users && users.slice().reverse().map((u, index) => {
-                    return (
-                        <User key={index} showDelButton={u.login !== user.login} deleteFunction={deleteUser} u={u}/>
-                    )
-                })}
-            </TransfContainer>
-       </TransfScreenContainer>
+        <>
+            <NavArrow />
+            <TransfScreenContainer>
+                <h1>Administrador</h1>
+                    <TransfContainer>
+                    <SaldoContainer>
+                        <h2>Usuários</h2>
+                        <Button color="lightgreen" onClick={() => history.push("/admin/newUser")}>Novo usuário</Button>
+                    </SaldoContainer>
+                        {users && users.slice().reverse().map((u, index) => {
+                            return (
+                                <User key={index} showDelButton={u.login !== user.login} deleteFunction={deleteUser} u={u}/>
+                            )
+                        })}
+                    </TransfContainer>
+            </TransfScreenContainer>
+       </>
     )
 }

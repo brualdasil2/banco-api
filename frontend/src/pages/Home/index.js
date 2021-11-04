@@ -8,6 +8,7 @@ import { ButtonContainer, HomeContainer } from "./styles"
 import { BsFillPersonFill, BsGearFill } from "react-icons/bs"
 import { GrMoney } from "react-icons/gr"
 import { BsFillGearFill } from "react-icons/bs"
+import NavArrow from "../../components/NavArrow"
 
 function Home() {
     const [user, setUser] = useContext(AuthContext)

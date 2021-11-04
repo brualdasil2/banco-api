@@ -8,6 +8,7 @@ import { api } from "../../../services/api";
 import { useHistory } from "react-router";
 import { useContext } from "react";
 import { AuthContext } from "../../../contexts/AuthContext";
+import NavArrow from "../../../components/NavArrow";
 
 export default function NewUser() {
 
@@ -97,18 +98,21 @@ export default function NewUser() {
     }
 
     return (
-        <ScreenContainer>
-            <InputsContainer>
-                <Input label="Nome" onChange={(e) => {setNome(e.target.value)}}/>
-                <Input label="Idade" onChange={(e) => {setIdade(e.target.value)}}/>
-                <Input value={saldo} label="Saldo inicial" onChange={(e) => handleValueUpdate(e.target.value)}/>
-                <Input label="Login" onChange={(e) => {setLogin(e.target.value)}}/>
-                <Input type="password" label="Senha" onChange={(e) => {setSenha(e.target.value)}}/>
-                <Input type="password" label="Confirme a senha" onChange={(e) => {setRepSenha(e.target.value)}} />
-                <Input label="Admin" type="checkbox" checked={admin} onChange={(e) => setAdmin(e.target.checked)}/>
-                <Button onClick={saveUser} disabled={senha !== repSenha || senha.length === 0}>Criar usuário</Button>
-                <ErrorMsg>{errorMsg}</ErrorMsg>
-            </InputsContainer>
-        </ScreenContainer>
+        <>
+            <NavArrow />
+            <ScreenContainer>
+                <InputsContainer>
+                    <Input label="Nome" onChange={(e) => {setNome(e.target.value)}}/>
+                    <Input label="Idade" onChange={(e) => {setIdade(e.target.value)}}/>
+                    <Input value={saldo} label="Saldo inicial" onChange={(e) => handleValueUpdate(e.target.value)}/>
+                    <Input label="Login" onChange={(e) => {setLogin(e.target.value)}}/>
+                    <Input type="password" label="Senha" onChange={(e) => {setSenha(e.target.value)}}/>
+                    <Input type="password" label="Confirme a senha" onChange={(e) => {setRepSenha(e.target.value)}} />
+                    <Input label="Admin" type="checkbox" checked={admin} onChange={(e) => setAdmin(e.target.checked)}/>
+                    <Button color="lightgreen" onClick={saveUser} disabled={senha !== repSenha || senha.length === 0}>Criar usuário</Button>
+                    <ErrorMsg>{errorMsg}</ErrorMsg>
+                </InputsContainer>
+            </ScreenContainer>
+        </>
     )
 }

@@ -5,6 +5,7 @@ import Input from "../../../components/Input"
 import { api } from "../../../services/api"
 import { useHistory } from "react-router"
 import Button from "../../../components/Button"
+import NavArrow from "../../../components/NavArrow"
 
 
 
@@ -85,11 +86,14 @@ export default function NewTransfer() {
     }
 
     return (
-        <ScreenContainer>
-            <Input label="Usuário destino" onChange={(e) => {setDestino(e.target.value)}}/>
-            <Input value={valor} label="Valor a transferir" onChange={(e) => {handleValueUpdate(e.target.value)}}/>
-            <Button disabled={valorNums.length === 0 || destino.length === 0} color="lightgreen" onClick={saveTransfer}>Enviar Transferência</Button>
-            <ErrorMsg>{errorMsg}</ErrorMsg>
-        </ScreenContainer>
+        <>
+            <NavArrow />
+            <ScreenContainer>
+                <Input label="Usuário destino" onChange={(e) => {setDestino(e.target.value)}}/>
+                <Input value={valor} label="Valor a transferir" onChange={(e) => {handleValueUpdate(e.target.value)}}/>
+                <Button disabled={valorNums.length === 0 || destino.length === 0} color="lightgreen" onClick={saveTransfer}>Enviar Transferência</Button>
+                <ErrorMsg>{errorMsg}</ErrorMsg>
+            </ScreenContainer>
+        </>
     )
 }
