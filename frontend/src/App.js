@@ -7,6 +7,7 @@ import Perfil from "./pages/Perfil";
 import ErrorPage from "./pages/404"
 import Transacoes from "./pages/Transacoes";
 import Admin from "./pages/Admin"
+import NewUser from "./pages/Admin/NewUser";
 import { PrivateRoute } from "./routes/PrivateRoute";
 import "./index.css"
 import NewTransfer from "./pages/Transacoes/New";
@@ -34,6 +35,9 @@ function App() {
           </PrivateRoute>
           <PrivateRoute exact path="/admin">
             <Admin />
+          </PrivateRoute>
+          <PrivateRoute exact path="/admin/newUser">
+            <NewUser />
           </PrivateRoute>
           <Route path="*">
             <ErrorPage />
