@@ -268,7 +268,7 @@ class Users(Resource):
                 else:
                     f = open("data.json", "w")
                     password = encrypt_string(args["senha"])
-                    saldo = round(args["saldo",2])
+                    saldo = round(args["saldo"],2)
                     new_user = {
                         "nome":args["nome"],
                         "idade":args["idade"],
