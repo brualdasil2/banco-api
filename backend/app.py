@@ -202,6 +202,8 @@ class User(Resource):
             data = json.load(f)
             if not data["users"][auth]["admin"]:
                 return create_error_response("Somente o admin pode deletar usuários", 404)
+            elif auth == login:
+                return create_error_response("Você não pode se deletar", 404)
             else:
                 deleted = data["users"].pop(login)
                 f = open("data.json", "w")
