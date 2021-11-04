@@ -5,8 +5,9 @@ import { AuthContext } from "../../contexts/AuthContext"
 import { api } from "../../services/api"
 import { ScreenContainer } from "../Login/styles"
 import { ButtonContainer, HomeContainer } from "./styles"
-import { BsFillPersonFill } from "react-icons/bs"
+import { BsFillPersonFill, BsGearFill } from "react-icons/bs"
 import { GrMoney } from "react-icons/gr"
+import { BsFillGearFill } from "react-icons/bs"
 
 function Home() {
     const [user, setUser] = useContext(AuthContext)
@@ -48,6 +49,11 @@ function Home() {
                     <MenuButton destination="/transacoes" title="Transações">
                         <GrMoney size={50} />
                     </MenuButton>
+                    {user.admin && (
+                        <MenuButton destination="/admin" title="Admin">
+                            <BsGearFill size={50} />
+                        </MenuButton>
+                    )}
                 </ButtonContainer>
             </HomeContainer>
         </ScreenContainer>

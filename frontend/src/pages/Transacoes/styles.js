@@ -11,6 +11,7 @@ export const TransfScreenContainer = styled.div`
 export const TransfContainer = styled.div`
     margin-top: 50px;
     width: fit-content;
+    min-width: 30%;
 `
 export const SaldoContainer = styled.div`
     width: 100%;

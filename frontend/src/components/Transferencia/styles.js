@@ -9,7 +9,7 @@ export const TransfWrapper = styled.div`
     border-style: solid;
     border-radius: 20px;
     display: flex;
-    padding: 10px 5px;
+    padding: 10px 15px;
     align-items: center;
     margin: 10px 0px;
     justify-content: space-between;
