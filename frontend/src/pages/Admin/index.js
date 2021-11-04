@@ -2,14 +2,17 @@ import { useContext, useEffect } from "react";
 import { useState } from "react/cjs/react.development";
 import { AuthContext } from "../../contexts/AuthContext";
 import { api } from "../../services/api";
-import { TransfContainer, TransfScreenContainer } from "../Transacoes/styles";
+import { SaldoContainer, TransfContainer, TransfScreenContainer } from "../Transacoes/styles";
 import User from "../../components/User"
+import Button from "../../components/Button"
+import { useHistory } from "react-router";
 
 export default function Admin() {
 
     const [user] = useContext(AuthContext)
     const [users, setUsers] = useState([])
-    const [update, setUpdate] = useState(false)
+
+    const history = useHistory()
 
     useEffect(async() => {
         try {
@@ -29,8 +32,9 @@ export default function Admin() {
 
     async function deleteUser(u) {
         try {
-            const res = await api.delete(`/users/${u.login}?token=${user.token}`)
-            setUpdate(!update)
+            let res = await api.delete(`/users/${u.login}?token=${user.token}`)
+            res = await api.get(`/users?token=${user.token}`)
+            setUsers(res.data.users)
         }
         catch (e) {
             if (e.response) {
@@ -46,7 +50,10 @@ export default function Admin() {
        <TransfScreenContainer>
            <h1>Administrador</h1>
             <TransfContainer>
+            <SaldoContainer>
                 <h2>Usuários</h2>
+                <Button color="lightgreen" onClick={() => history.push("/admin/newUser")}>Novo usuário</Button>
+            </SaldoContainer>
                 {users && users.slice().reverse().map((u, index) => {
                     return (
                         <User key={index} showDelButton={u.login !== user.login} deleteFunction={deleteUser} u={u}/>
