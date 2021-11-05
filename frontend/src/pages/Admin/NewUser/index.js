@@ -12,7 +12,7 @@ import NavArrow from "../../../components/NavArrow";
 
 export default function NewUser() {
 
-    const [user] = useContext(AuthContext)
+    const {user} = useContext(AuthContext)
 
     const [nome, setNome] = useState("")
     const [idade, setIdade] = useState("")
@@ -77,7 +77,7 @@ export default function NewUser() {
 
     async function saveUser() {
         try {
-            const res = await api.post(`/users?token=${user.token}`, {
+            const res = await api.post(`/users`, {
                 nome: nome,
                 idade: parseInt(idade),
                 saldo: formatValorNumsToFloat(saldoNums),

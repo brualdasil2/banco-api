@@ -10,32 +10,11 @@ import NavArrow from "../../components/NavArrow"
 
 export default function Transacoes() {
 
-    const [user, setUser] = useContext(AuthContext) 
+    const {user, refreshUser} = useContext(AuthContext) 
     const history = useHistory()
 
     useEffect(async() => {
-        try {
-            const res = await api.get(`/users/${user.login}?token=${user.token}`)
-            const newUser = {
-                login: user.login,
-                token: user.token,
-                admin: res.data.admin,
-                idade: res.data.idade,
-                nome: res.data.nome,
-                saldo: res.data.saldo,
-                historico: res.data.historico
-            }
-            console.log(newUser)
-            setUser(newUser)
-        }
-        catch (e){
-            if (e.response) {
-                console.log(e.response.data.message)
-            }
-            else {
-                console.log("Servidor não encontrado!")
-            }
-        }
+        await refreshUser()
     }, [])
 
     return (
@@ -49,7 +28,7 @@ export default function Transacoes() {
                         <Button color="lightgreen" onClick={() => history.push("/transacoes/new")}>Nova transferência</Button>
                     </SaldoContainer>
                     <h2>Histórico</h2>
-                    {user.historico.slice().reverse().map((transf, index) => {
+                    {user.historico && user.historico.slice().reverse().map((transf, index) => {
                         return (
                             <Transferencia key={index} transf={transf}/>
                         )

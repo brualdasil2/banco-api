@@ -11,7 +11,7 @@ import NavArrow from "../../../components/NavArrow"
 
 export default function NewTransfer() {
 
-    const [user, setUser] = useContext(AuthContext)
+    const {user, setUser} = useContext(AuthContext)
     const [destino, setDestino] = useState("")
     const [valor, setValor] = useState("R$ 0,00")
     const [valorNums, setValorNums] = useState("")
@@ -31,7 +31,7 @@ export default function NewTransfer() {
 
     async function saveTransfer() {
         try {
-            const res = await api.post(`/users/${user.login}/transfer?token=${user.token}`, {
+            const res = await api.post(`/users/${user.login}/transfer`, {
                 valor: formatValorNumsToFloat(valorNums),
                 destino
             })

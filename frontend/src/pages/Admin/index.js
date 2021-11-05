@@ -10,14 +10,14 @@ import NavArrow from "../../components/NavArrow";
 
 export default function Admin() {
 
-    const [user] = useContext(AuthContext)
+    const {user} = useContext(AuthContext)
     const [users, setUsers] = useState([])
 
     const history = useHistory()
 
     useEffect(async() => {
         try {
-            const res = await api.get(`/users?token=${user.token}`)
+            const res = await api.get(`/users`)
             const newUsers = res.data.users
             setUsers(newUsers)
         }
@@ -33,8 +33,8 @@ export default function Admin() {
 
     async function deleteUser(u) {
         try {
-            let res = await api.delete(`/users/${u.login}?token=${user.token}`)
-            res = await api.get(`/users?token=${user.token}`)
+            let res = await api.delete(`/users/${u.login}`)
+            res = await api.get(`/users`)
             setUsers(res.data.users)
         }
         catch (e) {

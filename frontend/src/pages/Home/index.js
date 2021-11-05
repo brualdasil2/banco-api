@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from "react"
-import { Redirect } from "react-router"
+import { Redirect, useHistory } from "react-router"
 import MenuButton from "../../components/MenuButton"
 import { AuthContext } from "../../contexts/AuthContext"
 import { api } from "../../services/api"
@@ -9,40 +9,25 @@ import { BsFillPersonFill, BsGearFill } from "react-icons/bs"
 import { GrMoney } from "react-icons/gr"
 import { BsFillGearFill } from "react-icons/bs"
 import NavArrow from "../../components/NavArrow"
+import Button from "../../components/Button"
 
 function Home() {
-    const [user, setUser] = useContext(AuthContext)
+    const {user, logoutUser} = useContext(AuthContext)
+    //const login = localStorage.getItem("@banco-api/login")
 
-    useEffect(async() => {
-        try {
-            const res = await api.get(`/users/${user.login}?token=${user.token}`)
-            const newUser = {
-                login: user.login,
-                token: user.token,
-                admin: res.data.admin,
-                idade: res.data.idade,
-                nome: res.data.nome,
-                saldo: res.data.saldo,
-                historico: res.data.historico
-            }
-            console.log(newUser)
-            setUser(newUser)
-        }
-        catch (e){
-            if (e.response) {
-                console.log(e.response.data.message)
-            }
-            else {
-                console.log("Servidor não encontrado!")
-            }
-        }
-    }, [])
+    const history = useHistory()
+
+    function logout() {
+        logoutUser()
+    }
+
 
     return (
         <ScreenContainer>
+            <Button color="red" onClick={logout}>Logout</Button>
             <HomeContainer>
                 <h1>HOME</h1>
-                <h3>Bem-vindo, {user.nome}!</h3>
+                <h3>Bem-vindo, {user && user.nome}!</h3>
                 <ButtonContainer>
                     <MenuButton destination="/perfil" title="Perfil">
                         <BsFillPersonFill size={50}/>
@@ -50,7 +35,7 @@ function Home() {
                     <MenuButton destination="/transacoes" title="Transações">
                         <GrMoney size={50} />
                     </MenuButton>
-                    {user.admin && (
+                    {user && user.admin && (
                         <MenuButton destination="/admin" title="Admin">
                             <BsGearFill size={50} />
                         </MenuButton>

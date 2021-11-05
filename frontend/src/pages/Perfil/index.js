@@ -8,7 +8,7 @@ import Button from "../../components/Button";
 import NavArrow from "../../components/NavArrow";
 
 export default function Perfil() {
-    const [user, setUser] = useContext(AuthContext)
+    const {user, setUser} = useContext(AuthContext)
     const [idade, setIdade] = useState("")
     const [editIdade, setEditIdade] = useState(false)
     const [editSenha, setEditSenha] = useState(false)
@@ -18,7 +18,7 @@ export default function Perfil() {
 
     async function saveIdade() {
         try {
-            const res = await api.put(`/users/${user.login}?token=${user.token}`, { idade: parseInt(idade) })
+            const res = await api.put(`/users/${user.login}`, { idade: parseInt(idade) })
             const newUser = {...user, idade}
             setUser(newUser)
             setEditIdade(false)
@@ -35,7 +35,7 @@ export default function Perfil() {
     }   
     async function saveSenha() {
         try {
-            const res = await api.put(`/users/${user.login}?token=${user.token}`, { senha })
+            const res = await api.put(`/users/${user.login}`, { senha })
             const newUser = {...user, senha}
             setUser(newUser)
             setEditSenha(false)

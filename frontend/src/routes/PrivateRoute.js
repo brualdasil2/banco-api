@@ -1,12 +1,26 @@
-import { Redirect, Route } from "react-router";
-import { useContext } from "react";
+import { Redirect, Route, useHistory } from "react-router";
+import { useContext, useEffect } from "react";
 import { AuthContext } from "../contexts/AuthContext";
+import { api } from "../services/api";
+import { useState } from "react/cjs/react.development";
 
 export function PrivateRoute({children, ...rest}) {
-    const [user] = useContext(AuthContext)
+
+    const {fetchUser} = useContext(AuthContext)
+    const token = localStorage.getItem("@banco-api/token")
+    const [redirectUser, setRedirectUser] = useState(false)
+
+
+    useEffect(async() => {
+        const redirectUserValue = await fetchUser()
+        if (redirectUserValue) {
+            setRedirectUser(true)
+        }
+    }, [])
+    
     return (
         <Route {...rest}>
-            {user.token ? (
+            {token && !redirectUser ? (
                 <>
                     {children}
                 </>
