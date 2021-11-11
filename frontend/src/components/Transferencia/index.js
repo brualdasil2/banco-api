@@ -1,4 +1,4 @@
-import { TransfWrapper, Value } from "./styles";
+import { MobileDataSection, MobileHeaderSection, TransfWrapper, Value } from "./styles";
 import { BsFillArrowDownRightCircleFill } from "react-icons/bs"
 import { BsFillArrowUpRightCircleFill } from "react-icons/bs"
 
@@ -19,25 +19,23 @@ export default function Transferencia({transf}) {
 
     return (
         <TransfWrapper>
-            {transf.origem ? (
-                <BsFillArrowDownRightCircleFill size={50} color="green" />
-            ):(
-                <BsFillArrowUpRightCircleFill size={50} color="red" />
-                )}
-            <Value>R${transf.valor}</Value>
-            {transf.origem ? (
-                <h3>De: {transf.origem}</h3>
+            <MobileHeaderSection>
+                {transf.origem ? (
+                    <BsFillArrowDownRightCircleFill size={50} color="green" />
                 ):(
-                    <h3>Para: {transf.destino}</h3>
+                    <BsFillArrowUpRightCircleFill size={50} color="red" />
                     )}
-            <h3>Data: {formatDate(transf.data)}</h3>
-            <h3>Hora: {formatHour(transf.data)}</h3>
+                <Value>R${transf.valor}</Value>
+            </MobileHeaderSection>
+            <MobileDataSection>
+                {transf.origem ? (
+                    <h3>De: {transf.origem}</h3>
+                    ):(
+                        <h3>Para: {transf.destino}</h3>
+                        )}
+                <h3>Data: {formatDate(transf.data)}</h3>
+                <h3>Hora: {formatHour(transf.data)}</h3>
+            </MobileDataSection>
         </TransfWrapper>
     )
 }
-
-/*
-"valor": 42.2,
-"destino": "carollw",
-"data": "2021-10-26 13:49:04.787574"
-*/

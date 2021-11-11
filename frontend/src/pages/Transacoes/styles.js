@@ -12,6 +12,7 @@ export const TransfContainer = styled.div`
     margin-top: 50px;
     width: fit-content;
     min-width: 30%;
+    padding: 0px 10px;
 `
 export const SaldoContainer = styled.div`
     width: 100%;

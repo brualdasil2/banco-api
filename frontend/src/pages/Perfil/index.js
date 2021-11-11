@@ -3,7 +3,7 @@ import Input from "../../components/Input";
 import { AuthContext } from "../../contexts/AuthContext";
 import { api } from "../../services/api";
 import { ErrorMsg, ScreenContainer } from "../Login/styles";
-import { InputsContainer, VerticalInputsContainer } from "./styles";
+import { InputsContainer, ProfileDataContainer, VerticalInputsContainer } from "./styles";
 import Button from "../../components/Button";
 import NavArrow from "../../components/NavArrow";
 
