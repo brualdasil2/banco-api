@@ -63,6 +63,8 @@ export function AuthContextProvider(props) {
                     }
                     else {
                         console.log("Servidor não encontrado!")
+                        logoutUser()
+                        return true
                     }
                 }
             }
