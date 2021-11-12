@@ -8,7 +8,6 @@ export const InputsContainer = styled.div`
     flex-wrap: wrap;
     margin-bottom: 20px;
     justify-content: space-around;
-    background-color: pink;
 `
 export const VerticalInputsContainer = styled.div`
     display: flex;
