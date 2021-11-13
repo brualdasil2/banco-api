@@ -6,6 +6,7 @@ import { ErrorMsg, ScreenContainer } from "../Login/styles";
 import { InputsContainer, ProfileDataContainer, VerticalInputsContainer } from "./styles";
 import Button from "../../components/Button";
 import NavArrow from "../../components/NavArrow";
+import { Spinner } from "../../components/Spinner";
 
 export default function Perfil() {
     const {user, setUser} = useContext(AuthContext)
@@ -15,16 +16,21 @@ export default function Perfil() {
     const [senha, setSenha] = useState("")
     const [repSenha, setRepSenha] = useState("")
     const [errorMsg, setErrorMsg] = useState("")
+    const [showSpinner, setShowSpinner] = useState(false)
+    
 
     async function saveIdade() {
+        setShowSpinner(true)
         try {
             const res = await api.put(`/users/${user.login}`, { idade: parseInt(idade) })
+            setShowSpinner(false)
             const newUser = {...user, idade}
             setUser(newUser)
             setEditIdade(false)
             setErrorMsg("")
         }
         catch (e) {
+            setShowSpinner(false)
             if (e.response) {
                 setErrorMsg(e.response.data.message)
             }
@@ -34,14 +40,17 @@ export default function Perfil() {
         }
     }   
     async function saveSenha() {
+        setShowSpinner(true)
         try {
             const res = await api.put(`/users/${user.login}`, { senha })
+            setShowSpinner(false)
             const newUser = {...user, senha}
             setUser(newUser)
             setEditSenha(false)
             setErrorMsg("")
         }
         catch (e) {
+            setShowSpinner(false)
             if (e.response) {
                 setErrorMsg(e.response.data.message)
             }
@@ -88,6 +97,7 @@ export default function Perfil() {
                         )}
                     </div>    
                 </InputsContainer>
+                {showSpinner && <Spinner />}
                 <ErrorMsg>{errorMsg}</ErrorMsg>
             </ScreenContainer>
         </>

@@ -6,6 +6,7 @@ import { api } from "../../../services/api"
 import { useHistory } from "react-router"
 import Button from "../../../components/Button"
 import NavArrow from "../../../components/NavArrow"
+import { Spinner } from "../../../components/Spinner"
 
 
 
@@ -16,6 +17,7 @@ export default function NewTransfer() {
     const [valor, setValor] = useState("R$ 0,00")
     const [valorNums, setValorNums] = useState("")
     const [errorMsg, setErrorMsg] = useState("")
+    const [showSpinner, setShowSpinner] = useState(false)
 
     const history = useHistory()
 
@@ -30,14 +32,17 @@ export default function NewTransfer() {
     }
 
     async function saveTransfer() {
+        setShowSpinner(true)
         try {
             const res = await api.post(`/users/${user.login}/transfer`, {
                 valor: formatValorNumsToFloat(valorNums),
                 destino
             })
+            setShowSpinner(false)
             history.push("/transacoes")
         }
         catch (e) {
+            setShowSpinner(false)
             if (e.response) {
                 setErrorMsg(e.response.data.message)
             }
@@ -92,6 +97,7 @@ export default function NewTransfer() {
                 <Input label="Usuário destino" onChange={(e) => {setDestino(e.target.value)}}/>
                 <Input value={valor} label="Valor a transferir" onChange={(e) => {handleValueUpdate(e.target.value)}}/>
                 <Button disabled={valorNums.length === 0 || destino.length === 0} color="lightgreen" onClick={saveTransfer}>Enviar Transferência</Button>
+                {showSpinner && <Spinner />}
                 <ErrorMsg>{errorMsg}</ErrorMsg>
             </ScreenContainer>
         </>
