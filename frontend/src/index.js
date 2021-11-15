@@ -1,10 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
+import { ModalContextProvider } from './contexts/ModalContext';
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <ModalContextProvider>
+      <App />
+    </ModalContextProvider>
   </React.StrictMode>,
   document.getElementById('root')
 );

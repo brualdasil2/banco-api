@@ -7,10 +7,12 @@ import User from "../../components/User"
 import Button from "../../components/Button"
 import { useHistory } from "react-router";
 import NavArrow from "../../components/NavArrow";
+import { ModalContext } from "../../contexts/ModalContext";
 
 export default function Admin() {
 
     const {user} = useContext(AuthContext)
+    const {activateModal} = useContext(ModalContext)
     const [users, setUsers] = useState([])
 
     const history = useHistory()
@@ -46,10 +48,12 @@ export default function Admin() {
             }
         }
     }
+
     
     return (
         <>
             <NavArrow />
+            
             <TransfScreenContainer>
                 <h1>Administrador</h1>
                     <TransfContainer>
@@ -59,7 +63,7 @@ export default function Admin() {
                     </SaldoContainer>
                         {users && users.slice().reverse().map((u, index) => {
                             return (
-                                <User key={index} showDelButton={u.login !== user.login} deleteFunction={deleteUser} u={u}/>
+                                <User key={index} showDelButton={u.login !== user.login} deleteFunction={() => activateModal("Deseja mesmo deletar esse usuário?", () => () => deleteUser(u))} u={u}/>
                             )
                         })}
                     </TransfContainer>

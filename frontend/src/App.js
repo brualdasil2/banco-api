@@ -11,39 +11,44 @@ import NewUser from "./pages/Admin/NewUser";
 import { PrivateRoute } from "./routes/PrivateRoute";
 import "./index.css"
 import NewTransfer from "./pages/Transacoes/New";
+import { ModalContext, ModalContextProvider } from "./contexts/ModalContext";
+import { Modal } from "./components/Modal";
+import { useContext } from "react/cjs/react.development";
 
 function App() {
-
   return (
     <AuthContextProvider>
-      <Router>
-        <Switch>
-          <Route path="/login">
-            <Login />
-          </Route>
-          <PrivateRoute exact path="/">
-            <Home />
-          </PrivateRoute>
-          <PrivateRoute exact path="/perfil">
-            <Perfil />
-          </PrivateRoute>
-          <PrivateRoute exact path="/transacoes">
-            <Transacoes />
-          </PrivateRoute>
-          <PrivateRoute exact path="/transacoes/new">
-            <NewTransfer />
-          </PrivateRoute>
-          <PrivateRoute exact path="/admin">
-            <Admin />
-          </PrivateRoute>
-          <PrivateRoute exact path="/admin/newUser">
-            <NewUser />
-          </PrivateRoute>
-          <Route path="*">
-            <ErrorPage />
-          </Route>
-        </Switch>
-      </Router>
+      <ModalContextProvider>
+        <Modal />
+        <Router>
+          <Switch>
+            <Route path="/login">
+              <Login />
+            </Route>
+            <PrivateRoute exact path="/">
+              <Home />
+            </PrivateRoute>
+            <PrivateRoute exact path="/perfil">
+              <Perfil />
+            </PrivateRoute>
+            <PrivateRoute exact path="/transacoes">
+              <Transacoes />
+            </PrivateRoute>
+            <PrivateRoute exact path="/transacoes/new">
+              <NewTransfer />
+            </PrivateRoute>
+            <PrivateRoute exact path="/admin">
+              <Admin />
+            </PrivateRoute>
+            <PrivateRoute exact path="/admin/newUser">
+              <NewUser />
+            </PrivateRoute>
+            <Route path="*">
+              <ErrorPage />
+            </Route>
+          </Switch>
+        </Router>
+      </ModalContextProvider>
     </AuthContextProvider>
   )
 }

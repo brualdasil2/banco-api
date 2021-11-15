@@ -15,7 +15,7 @@ export default function User({u, deleteFunction, showDelButton=true, ...rest}) {
             <h3>R$ {u.saldo}</h3>
             <IconsWrapper>
                 {u.admin && <RiAdminFill size={20} />}
-                {showDelButton && <Button {...rest} color="white" onClick={() => deleteFunction(u)}><AiFillDelete color={"red"} size={20}/></Button>}
+                {showDelButton && <Button {...rest} color="white" onClick={deleteFunction}><AiFillDelete color={"red"} size={20}/></Button>}
             </IconsWrapper>
         </TransfWrapper>
     )
