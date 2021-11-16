@@ -7,9 +7,11 @@ import { InputsContainer, ProfileDataContainer, VerticalInputsContainer } from "
 import Button from "../../components/Button";
 import NavArrow from "../../components/NavArrow";
 import { Spinner } from "../../components/Spinner";
+import { ModalContext } from "../../contexts/ModalContext";
 
 export default function Perfil() {
     const {user, setUser} = useContext(AuthContext)
+    const { activateModal } = useContext(ModalContext)
     const [idade, setIdade] = useState("")
     const [editIdade, setEditIdade] = useState(false)
     const [editSenha, setEditSenha] = useState(false)
@@ -89,7 +91,7 @@ export default function Perfil() {
                                     <Input type="password" label="Nova senha" disabled={false} onChange={(e) => {setSenha(e.target.value)}} />
                                     <Input type="password" label="Confirme a senha" disabled={false} onChange={(e) => {setRepSenha(e.target.value)}} />
                                 </VerticalInputsContainer>
-                                <Button color="lightgreen" disabled={senha !== repSenha || senha.length === 0} onClick={saveSenha}>Salvar senha</Button>
+                                <Button color="lightgreen" disabled={senha !== repSenha || senha.length === 0} onClick={() => activateModal("Tem certeza que deseja mudar sua senha? Se você esquecê-la, será impossível de recuperá-la.", () => saveSenha)}>Salvar senha</Button>
                                 <Button color="red" onClick={() => setEditSenha(false)}>Cancelar</Button>
                             </div>
                         ):(

@@ -13,18 +13,13 @@ import Button from "../../components/Button"
 
 function Home() {
     const {user, logoutUser} = useContext(AuthContext)
-    //const login = localStorage.getItem("@banco-api/login")
 
     const history = useHistory()
-
-    function logout() {
-        logoutUser()
-    }
 
 
     return (
         <ScreenContainer>
-            <Button color="red" onClick={logout}>Logout</Button>
+            <Button color="red" onClick={logoutUser}>Logout</Button>
             <HomeContainer>
                 <h1>HOME</h1>
                 <h3>Bem-vindo, {user && user.nome}!</h3>

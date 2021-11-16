@@ -8,11 +8,13 @@ import { api } from "../../../services/api";
 import { useHistory } from "react-router";
 import { useContext } from "react";
 import { AuthContext } from "../../../contexts/AuthContext";
+import { ModalContext } from "../../../contexts/ModalContext"
 import NavArrow from "../../../components/NavArrow";
 
 export default function NewUser() {
 
     const {user} = useContext(AuthContext)
+    const {activateModal} = useContext(ModalContext)
 
     const [nome, setNome] = useState("")
     const [idade, setIdade] = useState("")
@@ -109,7 +111,7 @@ export default function NewUser() {
                     <Input type="password" label="Senha" onChange={(e) => {setSenha(e.target.value)}}/>
                     <Input type="password" label="Confirme a senha" onChange={(e) => {setRepSenha(e.target.value)}} />
                     <Input label="Admin" type="checkbox" checked={admin} onChange={(e) => setAdmin(e.target.checked)}/>
-                    <Button color="lightgreen" onClick={saveUser} disabled={senha !== repSenha || senha.length === 0}>Criar usuário</Button>
+                    <Button color="lightgreen" onClick={admin ? () => activateModal("Tem certeza que deseja criar um admin? Ele poderá criar e deletar usuários a vontade, incluindo você.", () => saveUser) : saveUser} disabled={senha !== repSenha || senha.length === 0}>Criar usuário</Button>
                     <ErrorMsg>{errorMsg}</ErrorMsg>
                 </InputsContainer>
             </ScreenContainer>

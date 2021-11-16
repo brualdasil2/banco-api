@@ -7,12 +7,14 @@ import { useHistory } from "react-router"
 import Button from "../../../components/Button"
 import NavArrow from "../../../components/NavArrow"
 import { Spinner } from "../../../components/Spinner"
+import { ModalContext } from "../../../contexts/ModalContext"
 
 
 
 export default function NewTransfer() {
 
     const {user, setUser} = useContext(AuthContext)
+    const {activateModal} = useContext(ModalContext)
     const [destino, setDestino] = useState("")
     const [valor, setValor] = useState("R$ 0,00")
     const [valorNums, setValorNums] = useState("")
@@ -90,13 +92,14 @@ export default function NewTransfer() {
         }
     }
 
+
     return (
         <>
             <NavArrow />
             <ScreenContainer>
                 <Input label="Usuário destino" onChange={(e) => {setDestino(e.target.value)}}/>
                 <Input value={valor} label="Valor a transferir" onChange={(e) => {handleValueUpdate(e.target.value)}}/>
-                <Button disabled={valorNums.length === 0 || destino.length === 0} color="lightgreen" onClick={saveTransfer}>Enviar Transferência</Button>
+                <Button disabled={valorNums.length === 0 || destino.length === 0} color="lightgreen" onClick={() => activateModal(`Tem certeza que deseja transferir ${valor} para ${destino}?`, () => saveTransfer)}>Enviar Transferência</Button>
                 {showSpinner && <Spinner />}
                 <ErrorMsg>{errorMsg}</ErrorMsg>
             </ScreenContainer>
