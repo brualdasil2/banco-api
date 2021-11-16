@@ -4,9 +4,157 @@
             "nome": "Bruno Silveira",
             "idade": 20,
             "senha": "5994471abb01112afcc18159f6cc74b4f511b99806da59b3caf5a9c173cacfc5",
-            "saldo": 99.9,
+            "saldo": 503.79,
             "admin": true,
-            "historico": []
+            "historico": [
+                {
+                    "valor": 1.0,
+                    "destino": "carollw",
+                    "data": "2021-11-05 18:03:24.864464"
+                },
+                {
+                    "valor": 50.02,
+                    "destino": "carollw",
+                    "data": "2021-11-05 18:04:46.246591"
+                },
+                {
+                    "valor": 0.05,
+                    "destino": "carollw",
+                    "data": "2021-11-05 18:08:39.124877"
+                },
+                {
+                    "valor": 2.2,
+                    "origem": "carollw",
+                    "data": "2021-11-05 18:11:20.749587"
+                },
+                {
+                    "valor": 2.0,
+                    "origem": "carollw",
+                    "data": "2021-11-06 23:01:39.400619"
+                },
+                {
+                    "valor": 10.0,
+                    "origem": "rsilveira",
+                    "data": "2021-11-11 21:47:40.636899"
+                },
+                {
+                    "valor": 0.03,
+                    "destino": "rsilveira",
+                    "data": "2021-11-13 04:14:25.376363"
+                },
+                {
+                    "valor": 0.01,
+                    "destino": "carollw",
+                    "data": "2021-11-15 20:30:25.317731"
+                },
+                {
+                    "valor": 0.2,
+                    "destino": "rsilveira",
+                    "data": "2021-11-16 01:31:05.432769"
+                },
+                {
+                    "valor": 60.0,
+                    "destino": "carollw",
+                    "data": "2021-11-16 01:48:01.951217"
+                },
+                {
+                    "valor": 1.0,
+                    "origem": "leo",
+                    "data": "2021-11-16 01:52:20.512049"
+                },
+                {
+                    "valor": 500.0,
+                    "origem": "leo",
+                    "data": "2021-11-16 02:00:25.257636"
+                }
+            ]
+        },
+        "carollw": {
+            "nome": "Caroline Weber",
+            "idade": 20,
+            "senha": "27ee6b96966293fff5fe02273da3eaf21481952d4d5f80a2638b2c1be3c20034",
+            "admin": false,
+            "saldo": 106.98,
+            "historico": [
+                {
+                    "valor": 1.0,
+                    "origem": "admin",
+                    "data": "2021-11-05 18:03:24.864464"
+                },
+                {
+                    "valor": 50.02,
+                    "origem": "admin",
+                    "data": "2021-11-05 18:04:46.246591"
+                },
+                {
+                    "valor": 0.05,
+                    "origem": "admin",
+                    "data": "2021-11-05 18:08:39.124877"
+                },
+                {
+                    "valor": 2.2,
+                    "destino": "admin",
+                    "data": "2021-11-05 18:11:20.749587"
+                },
+                {
+                    "valor": 2.0,
+                    "destino": "admin",
+                    "data": "2021-11-06 23:01:39.400619"
+                },
+                {
+                    "valor": 0.01,
+                    "origem": "admin",
+                    "data": "2021-11-15 20:30:25.317731"
+                },
+                {
+                    "valor": 60.0,
+                    "origem": "admin",
+                    "data": "2021-11-16 01:48:01.951217"
+                }
+            ]
+        },
+        "rsilveira": {
+            "nome": "Ricardo Silveira",
+            "idade": 57,
+            "senha": "571ee910ba7a63488eb539dfff887975b54aae135173edaa67bc3354f371b162",
+            "admin": false,
+            "saldo": 90.23,
+            "historico": [
+                {
+                    "valor": 10.0,
+                    "destino": "admin",
+                    "data": "2021-11-11 21:47:40.636899"
+                },
+                {
+                    "valor": 0.03,
+                    "origem": "admin",
+                    "data": "2021-11-13 04:14:25.376363"
+                },
+                {
+                    "valor": 0.2,
+                    "origem": "admin",
+                    "data": "2021-11-16 01:31:05.432769"
+                }
+            ]
+        },
+        "leo": {
+            "nome": "Leonardo",
+            "idade": 25,
+            "senha": "c00357563669ed21c34e13687cad669038eb88a2831fc8109b40ddc62f63e934",
+            "admin": true,
+            "saldo": 1e+181,
+            "historico": [
+                {
+                    "valor": 1.0,
+                    "destino": "admin",
+                    "data": "2021-11-16 01:52:20.512049"
+                },
+                {
+                    "valor": 500.0,
+                    "destino": "admin",
+                    "data": "2021-11-16 02:00:25.257636"
+                }
+            ]
         }
     }
 }

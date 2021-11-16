@@ -110,7 +110,9 @@ class Transfer(Resource):
                     return create_error_response(f"Usuario com login {args['destino']} não existe", 404)
                 else:
                     valor = round(args["valor"], 2)
-                    if data["users"][login]["saldo"] < valor:
+                    if valor <= 0:
+                        return create_error_response("O valor de transferência deve ser maior que 0", 404)
+                    elif data["users"][login]["saldo"] < valor:
                         return create_error_response("Saldo insuficiente", 404)
                     else:
                         f = open("data.json", "w")
