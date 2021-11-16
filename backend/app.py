@@ -4,11 +4,12 @@ import json
 import jwt
 import datetime
 import hashlib
+from decouple import config
 
 app = Flask(__name__)
 api = Api(app)
 
-app.config["SECRET_KEY"] = "bruxolito"
+app.config["SECRET_KEY"] = config("JWT_SECRET_KEY",default="")
 
 def validate_token(token):
     try:
@@ -79,7 +80,7 @@ class Login(Resource):
         if args["login"] not in users:
             return create_error_response(f"Usuario com login {args['login']} nao existe!", 404)
         elif password == users[args["login"]]["senha"]:
-            token = jwt.encode({"login": args["login"], "exp": datetime.datetime.utcnow() + datetime.timedelta(minutes=30)}, app.config["SECRET_KEY"])
+            token = jwt.encode({"login": args["login"], "exp": datetime.datetime.utcnow() + datetime.timedelta(minutes=120)}, app.config["SECRET_KEY"])
             return create_response({"token":token}, 200)
         else:
             return create_error_response("Senha invalida!", 404)

@@ -136,25 +136,6 @@
                     "data": "2021-11-16 01:31:05.432769"
                 }
             ]
-        },
-        "leo": {
-            "nome": "Leonardo",
-            "idade": 25,
-            "senha": "c00357563669ed21c34e13687cad669038eb88a2831fc8109b40ddc62f63e934",
-            "admin": true,
-            "saldo": 1e+181,
-            "historico": [
-                {
-                    "valor": 1.0,
-                    "destino": "admin",
-                    "data": "2021-11-16 01:52:20.512049"
-                },
-                {
-                    "valor": 500.0,
-                    "destino": "admin",
-                    "data": "2021-11-16 02:00:25.257636"
-                }
-            ]
         }
     }
 }
