@@ -1,55 +1,11 @@
 # Banco do Balas
 
-# Documentação da API de banco
+Este projeto foi desenvolvido em outubro - novembro de 2021, com o objetivo de compreender como funciona a construção de um servidor backend implementando uma API REST, e seu consumo em uma aplicação frontend.
 
-## Validação por token
-Nos métodos marcados com (token), é preciso passar um token válido por query string. Exemplo: `api.com/users?token=abcdefg`
+## Backend
 
-## /login
+Servidor desenvolvido em python com Flask. Na pasta `backend` encontra-se a documentação da API.
 
-POST:
+## Frontend
 
-    {
-        "login": string,
-        "senha": string
-    }
-
-    RESPOSTA:
-
-    {
-        "token":string
-    }
-
-## /users
-POST (token) (restrito ao admin): Cria um usuário novo. Login deve ser único.
-
-    {
-        "nome": string,
-        "idade": int,
-        "login": string,
-        "senha": string,
-        "saldo": float,
-        "admin": bool
-    }
-
-GET (token) (restrito ao admin): Retorna lista de todos os usuários.
-
-## /users/\<login>
-GET (token): Retorna o usuário. Restrito ao próprio usuário e ao admin.
-
-PUT (token): Atualiza alguns dados do usuário. Restrito ao próprio usuário e ao admin.
-
-    {
-        "senha": string,
-        "idade": string
-    }
-
-DELETE (token) (restrito ao admin): Deleta um usuário.
-
-## /users/\<login>/transfer
-POST (token) (restrito ao admin): Realiza uma transferência para outro usuário pelo login. Só transfere se houver saldo suficietnte.
-
-    {
-        "valor": float,
-        "destino": string
-    }
+Aplicação PWA e responsiva desenvolvida com React JS, com a utilização do Axios para realizar as requisições. Na pasta `frontend` encontram-se prints de algumas telas do app.
